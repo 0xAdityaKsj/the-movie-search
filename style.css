@@ -5,30 +5,49 @@ body {
 
 header {
     width: 100%;
-    height: 200px;
-    background-image: url(images/img.png);
+    height: 240px;
+    background-image: url(images/img3.png);
     background-position: center center;
-    background-size: 30em;
+    background-size: 55em;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #FEABAB;
+    color: white;
 }
 
 
 .title-bar {
     display: flex;
     gap: 15em;
+    margin-top: 5em;
+    margin-right: 8em;
 }
 
 .search-form {
     display: flex;
+    margin-top: 5em;
+    width: 40%
+}
+
+#input {
+    width: 100%;
+    padding: 1em 0 1em 1em;
+    border-color: black;
+
+}
+
+button {
+    width: 30%;
+
 }
 
 .span1,
 .span2 {
     padding: 0.2em;
-    background-color: black;
     border-radius: 5px;
+}
+
+.main {
+    margin-top: 5em;
 }
