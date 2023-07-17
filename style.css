@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: 'Lumanosimo', cursive;
 }
 
 header {
@@ -49,5 +50,10 @@ button {
 }
 
 .main {
-    margin-top: 5em;
+    margin: 5em 15em
+}
+
+section {
+    display: flex;
+    gap: 2em
 }
