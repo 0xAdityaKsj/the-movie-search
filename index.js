@@ -1,5 +1,6 @@
 const searchEl = document.getElementById('input')
 const formEl = document.querySelector('.search-form')
+const btnEl = document.querySelector('.button')
 const mainEl = document.querySelector('.main')
 const loadingOverlay = document.getElementById('loading-overlay');
 loadingOverlay.style.display = 'none'
@@ -11,8 +12,7 @@ async function getData(movieId) {
     return data
 }
 
-
-formEl.onsubmit = async (e) => {
+btnEl.addEventListener("click", async function (e) {
     e.preventDefault();
     let movie = searchEl.value;
     mainEl.innerHTML = `<div id="loading-overlay">
@@ -40,8 +40,11 @@ formEl.onsubmit = async (e) => {
                     <p>
                         ${Plot}
                     </p>
+                    <div class="add-to-list">
+                        add to watch-list
+                    </div>
                 </div>
-            </section>`;
+            </section>`
         }
         mainEl.innerHTML = html;
         mainEl.classList.add("fade-in");
@@ -53,5 +56,6 @@ formEl.onsubmit = async (e) => {
         // Hide the loading overlay after fetching and rendering data
         loadingOverlay.style.display = 'none';
     }
-};
+})
+
 
