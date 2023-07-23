@@ -26,7 +26,7 @@ btnEl.addEventListener("click", async function (e) {
     loadingOverlay.style.display = 'flex';
 
     try {
-        const res = await fetch(`http://www.omdbapi.com/?i=tt1630029&apikey=5a7bd67e&s=${movie}`);
+        const res = await fetch(`https://www.omdbapi.com/?i=tt1630029&apikey=5a7bd67e&s=${movie}`);
         const data = await res.json();
         console.log(data.Search);
         let html = '';
@@ -78,7 +78,7 @@ mainEl.addEventListener("click", function (event) {
                 try {
                     console.log('clicked')
                     let movie = searchEl.value;
-                    const res = await fetch(`http://www.omdbapi.com/?i=tt1630029&apikey=5a7bd67e&s=${movie}`);
+                    const res = await fetch(`https://www.omdbapi.com/?i=tt1630029&apikey=5a7bd67e&s=${movie}`);
                     const data = await res.json();
                     let html = '';
                     for (item in data.Search) {
