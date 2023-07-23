@@ -10,7 +10,7 @@ loadingOverlay.style.display = 'none'
 
 
 async function getData(movieId) {
-    const res = await fetch(`http://www.omdbapi.com/?apikey=5a7bd67e&i=${movieId}`)
+    const res = await fetch(`https://www.omdbapi.com/?apikey=5a7bd67e&i=${movieId}`)
     const data = await res.json()
     return data
 }
