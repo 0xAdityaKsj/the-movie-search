@@ -116,6 +116,8 @@ function renderAbout() {
     const genre = retrievedMovieData.genre;
     const plot = retrievedMovieData.plot;
 
+    let html = ''
+
 
     html += `<section>
     <div class="sec1">
