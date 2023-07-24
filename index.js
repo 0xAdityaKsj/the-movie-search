@@ -15,6 +15,39 @@ async function getData(movieId) {
     return data
 }
 
+function renderAbout() {
+    const storedMovieData = localStorage.getItem('movieData');
+    const retrievedMovieData = JSON.parse(storedMovieData);
+
+    const { poster, title, runtime, genre, plot } = retrievedMovieData
+
+
+
+    let html = ''
+
+
+    html += `<section>
+    <div class="sec1">
+        <img src="${poster}" alt="">
+    </div>
+    <div class="sec2">
+        <h1>${title}</h1>
+        <p>${runtime},${genre}</p>
+        <p>
+            ${plot}
+        </p>
+        <div class="add-to-list">
+            add to watch-list
+        </div>
+    </div>
+</section>`
+
+    aboutEl.innerHTML = html
+
+}
+
+
+
 btnEl.addEventListener("click", async function (e) {
     e.preventDefault();
     let movie = searchEl.value;
@@ -43,7 +76,7 @@ btnEl.addEventListener("click", async function (e) {
                     <p>
                         ${Plot}
                     </p>
-                    <div class="add-to-list">
+                    <div class="add-to-list" data-title="${data.Search[item].Title}">
                         add to watch-list
                     </div>
                 </div>
@@ -62,6 +95,9 @@ btnEl.addEventListener("click", async function (e) {
 })
 
 
+
+
+
 mainEl.addEventListener("click", function (event) {
     // Traverse up the DOM tree from the clicked element to find the "add-to-list" button or any of its ancestors.
     const addToWatchListButton = event.target.closest(".add-to-list");
@@ -71,6 +107,7 @@ mainEl.addEventListener("click", function (event) {
         mainEl.addEventListener("click", async function (event) {
             // Traverse up the DOM tree from the clicked element to find the "add-to-list" button or any of its ancestors.
             const addToWatchListButton = event.target.closest(".add-to-list");
+            console.log(event.target)
 
             // Check if the "add-to-list" button or any of its ancestors was clicked.
             if (addToWatchListButton) {
@@ -78,22 +115,37 @@ mainEl.addEventListener("click", function (event) {
                 try {
                     console.log('clicked')
                     let movie = searchEl.value;
+                    console.log('movie is ' + movie)
                     const res = await fetch(`https://www.omdbapi.com/?i=tt1630029&apikey=5a7bd67e&s=${movie}`);
                     const data = await res.json();
                     let html = '';
                     for (item in data.Search) {
-                        const details = await getData(data.Search[item].imdbID);
-                        const { Runtime, Genre, Plot } = details;
-                        const movieData = {
-                            poster: data.Search[item].Poster,
-                            title: data.Search[item].Title,
-                            runtime: Runtime,
-                            genre: Genre,
-                            plot: Plot
-                        };
+                        if (event.target.getAttribute('data-title') === data.Search[item].Title) {
 
-                        localStorage.setItem('movieData', JSON.stringify(movieData));
+                            const details = await getData(data.Search[item].imdbID);
+                            console.log(details)
+                            const { Runtime, Genre, Plot } = details;
+                            const movieData = {
+                                poster: data.Search[item].Poster,
+                                title: data.Search[item].Title,
+                                runtime: Runtime,
+                                genre: Genre,
+                                plot: Plot
+                            };
+
+                            localStorage.setItem('movieData', JSON.stringify(movieData));
+                            renderAbout()
+                            break
+
+
+                        }
+                        else {
+                            console.log("no title found")
+                        }
+
                     }
+
+
 
 
                 } catch (error) {
@@ -101,40 +153,7 @@ mainEl.addEventListener("click", function (event) {
                 }
             }
         });
-        // Add your logic to handle adding the movie to the watch-list here
+
     }
 });
 
-function renderAbout() {
-    const storedMovieData = localStorage.getItem('movieData');
-    const retrievedMovieData = JSON.parse(storedMovieData);
-
-
-    const poster = retrievedMovieData.poster;
-    const title = retrievedMovieData.title;
-    const runtime = retrievedMovieData.runtime;
-    const genre = retrievedMovieData.genre;
-    const plot = retrievedMovieData.plot;
-
-    let html = ''
-
-
-    html += `<section>
-    <div class="sec1">
-        <img src="${data.Search[item].Poster}" alt="">
-    </div>
-    <div class="sec2">
-        <h1>${data.Search[item].Title}</h1>
-        <p>${Runtime},${Genre}</p>
-        <p>
-            ${Plot}
-        </p>
-        <div class="add-to-list">
-            add to watch-list
-        </div>
-    </div>
-</section>`
-
-    aboutEl.innerHTML = html
-
-}
