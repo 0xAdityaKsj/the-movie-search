@@ -2,11 +2,9 @@ const searchEl = document.getElementById('input')
 const formEl = document.querySelector('.search-form')
 const btnEl = document.querySelector('.button')
 const mainEl = document.querySelector('.main')
-const aboutEl = document.querySelector('.about')
+const aboutEl = document.getElementById('about')
 const loadingOverlay = document.getElementById('loading-overlay');
 loadingOverlay.style.display = 'none'
-
-
 
 
 async function getData(movieId) {
@@ -16,6 +14,7 @@ async function getData(movieId) {
 }
 
 function renderAbout() {
+    console.log('render about funtion running')
     const storedMovieData = localStorage.getItem('movieData');
     const retrievedMovieData = JSON.parse(storedMovieData);
 
@@ -113,6 +112,11 @@ mainEl.addEventListener("click", function (event) {
             if (addToWatchListButton) {
 
                 try {
+                    let movieData = []
+                    localStorage.setItem('movieData', JSON.stringify(movieData))
+
+                    // HERE ... create an array for storing data in local storage and then kepe updating the data
+
                     console.log('clicked')
                     let movie = searchEl.value;
                     console.log('movie is ' + movie)
@@ -123,15 +127,14 @@ mainEl.addEventListener("click", function (event) {
                         if (event.target.getAttribute('data-title') === data.Search[item].Title) {
 
                             const details = await getData(data.Search[item].imdbID);
-                            console.log(details)
                             const { Runtime, Genre, Plot } = details;
-                            const movieData = {
+                            const movieData = [{
                                 poster: data.Search[item].Poster,
                                 title: data.Search[item].Title,
                                 runtime: Runtime,
                                 genre: Genre,
                                 plot: Plot
-                            };
+                            }];
 
                             localStorage.setItem('movieData', JSON.stringify(movieData));
                             renderAbout()
